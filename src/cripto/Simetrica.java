@@ -15,7 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Fred William Torno Junior - www.fwtj.com.br - fredwilliam@gmail.com -
  * (22) 9-8136-5786
  */
-public class AES {
+public class Simetrica {
 
     private static final String METODO_ENCRIPTACAO = "AES";
     public static final byte[] CHAVE = geradorDeChaveCripto();
@@ -115,7 +115,7 @@ public class AES {
             System.out.println("Informação Pura            : " + informacao);
             informacaoCriptografada = encriptar(CHAVE, informacao);
             System.out.println("Informação criptografada   : " + informacaoCriptografada);
-            informacaoDescriptografada = AES.decriptar(AES.CHAVE, informacaoCriptografada);
+            informacaoDescriptografada = Simetrica.decriptar(Simetrica.CHAVE, informacaoCriptografada);
             System.out.println("Informação descriptografada: " + informacaoDescriptografada);
         } catch (Throwable e) {
             e.getMessage();
