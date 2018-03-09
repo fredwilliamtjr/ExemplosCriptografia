@@ -22,51 +22,61 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Throwable  {
+    public static void main(String[] args) throws Throwable {
+        testarCriptografiaSimetrica();
         testarCriptografiaAssimetrica();
     }
 
     private static void testarCriptografiaSimetrica() throws Throwable {
         // Testar Criptografia Simetrica
-        String textoClaro = "Oi, me esconda!";
+        String textoClaro = "Oi, me esconda Simetrica!";
         System.out.println("Texto Claro  : " + textoClaro);
 
-        byte[] chaveSimples = CriptografiaKeysUtils.gerarChaveSimples();
-        System.out.println("Chave Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(chaveSimples));
-        System.out.println("Chave Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(chaveSimples));
+        byte[] chaveSimplesMemoria = CriptografiaKeysUtils.gerarChaveSimples();
+        // Não é obrigado gravar em disco, as duas linhas abaixo é so para mostrar como fazer!
+        CriptografiaKeysUtils.gravarChaveSimplesEmArquivo("chaveSimples.key", chaveSimplesMemoria);
+        byte[] chaveSimplesDoDisco = CriptografiaKeysUtils.lerChaveSimplesDoDisco("chaveSimples.key");
 
-        byte[] criptografarTexto = CriptografiaSimetricaUtils.criptografarTexto(chaveSimples, textoClaro);
+        System.out.println("Chave Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(chaveSimplesDoDisco));
+        System.out.println("Chave Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(chaveSimplesDoDisco));
+
+        byte[] criptografarTexto = CriptografiaSimetricaUtils.criptografarTexto(chaveSimplesDoDisco, textoClaro);
         System.out.println("Texto Cripto : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(criptografarTexto));
         System.out.println("Texto Cripto : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(criptografarTexto));
 
-        String descriptografarTexto = CriptografiaSimetricaUtils.descriptografarTexto(chaveSimples, criptografarTexto);
+        String descriptografarTexto = CriptografiaSimetricaUtils.descriptografarTexto(chaveSimplesDoDisco, criptografarTexto);
         System.out.println("Texto Descr  : " + descriptografarTexto);
+        
+        System.out.println("-------------------------------------------------------------------------------------------------");
     }
-    
-    public static void testarCriptografiaAssimetrica() throws Throwable{
+
+    public static void testarCriptografiaAssimetrica() throws Throwable {
         // Testar Criptografia Simetrica
-        String textoClaro = "Oi, me esconda!";
+        String textoClaro = "Oi, me esconda Assimetrica!";
         System.out.println("Texto Claro  : " + textoClaro);
-        
+
         CriptografiaKeysUtils.gerarParChaves();
-        
+        // Não é obrigado gravar em disco, as duas linhas abaixo é so para mostrar como fazer!
+        CriptografiaKeysUtils.gravarParChavesEmArquivo("private.key", "public.key");
+        CriptografiaKeysUtils.lerParChavesDoDisco("private.key", "public.key");
+
         PublicKey publicKey = CriptografiaKeysUtils.getPublicKey();
         System.out.println("publicKey Gerada  : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(publicKey.getEncoded()));
         System.out.println("publicKey Gerada  : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(publicKey.getEncoded()));
-        
+
         PrivateKey privateKey = CriptografiaKeysUtils.getPrivateKey();
         System.out.println("privateKey Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(privateKey.getEncoded()));
         System.out.println("privateKey Gerada : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(privateKey.getEncoded()));
-        
+
         byte[] criptografarTexto = CriptografiaAssimetricaUtils.criptografarTexto(publicKey, textoClaro);
         System.out.println("Texto Cripto      : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(criptografarTexto));
         System.out.println("Texto Cripto      : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(criptografarTexto));
-        
+
         String descriptografarTexto = CriptografiaAssimetricaUtils.descriptografarTexto(privateKey, criptografarTexto);
         System.out.println("Texto Descr       : " + descriptografarTexto);
         
-        
-        
+        System.out.println("-------------------------------------------------------------------------------------------------");
+
     }
 
 }
