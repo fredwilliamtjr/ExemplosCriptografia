@@ -1,4 +1,10 @@
 # ExemplosCriptografia
-Exemplos práticos de uso da criptografia AES puro e AES/RSA
+Exemplos práticos de uso da criptografia Simétrica e Assimétrica
 
-Duvidas entre em contato fredwilliam@gmail.com
+* Simétrica usando mesma chave na criptografia e descriptografia!
+* Assimétrica usando chave publica para criptografia e chave privada para descriptografia!
+
+
+
+Dúvidas entre em contato fredwilliam@gmail.com
+
