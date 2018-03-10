@@ -35,6 +35,7 @@ public class CriptografiaKeysUtils {
 
     private static PrivateKey privateKey = null;
     private static PublicKey publicKey = null;
+    private static KeyPair keyPair = null;
 
     public static PrivateKey getPrivateKey() {
         return privateKey;
@@ -43,6 +44,11 @@ public class CriptografiaKeysUtils {
     public static PublicKey getPublicKey() {
         return publicKey;
     }
+
+    public static KeyPair getKeyPair() {
+        return keyPair;
+    }
+    
 
     /**
      *
@@ -116,9 +122,9 @@ public class CriptografiaKeysUtils {
         try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance(METODO_ENCRIPTACAO);
             kpg.initialize(new RSAKeyGenParameterSpec(RSAKEYSIZE, RSAKeyGenParameterSpec.F4));
-            KeyPair kpr = kpg.generateKeyPair();
-            privateKey = kpr.getPrivate();
-            publicKey = kpr.getPublic();
+            keyPair = kpg.generateKeyPair();
+            privateKey = keyPair.getPrivate();
+            publicKey = keyPair.getPublic();
             return true;
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException ex) {
             throw new Throwable("Erro ao gerar par de chaves " + ex.getMessage());
