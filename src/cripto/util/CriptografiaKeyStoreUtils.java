@@ -26,6 +26,8 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,8 +82,8 @@ public class CriptografiaKeyStoreUtils {
             cert.setSubjectDN(new X509Principal("CN=localhost"));  //see examples to add O,OU etc  
             cert.setIssuerDN(new X509Principal("CN=localhost")); //same since it is self-signed  
             cert.setPublicKey(keyPair.getPublic());
-            cert.setNotBefore(new Date());
-            cert.setNotAfter(new Date());
+            cert.setNotBefore(new Calendar.Builder().setDate(2010, 1, 1).build().getTime());
+            cert.setNotAfter(new Calendar.Builder().setDate(2020, 1, 1).build().getTime());
             cert.setSignatureAlgorithm("SHA1WithRSAEncryption");
             PrivateKey signingKey = keyPair.getPrivate();
             generate = cert.generate(signingKey, "BC");
