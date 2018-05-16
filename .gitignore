@@ -4,3 +4,7 @@
 /build
 /chaveSimples.key
 /out
+/.idea
+/nbproject
+/ExemplosCriptografia.iml
+/manifest.mf
