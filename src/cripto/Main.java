@@ -2,12 +2,9 @@ package cripto;
 
 import cripto.util.*;
 
-import java.security.KeyPair;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 
-/*
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -23,13 +20,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Throwable {
-//        testarCriptografiaSimetrica();
+        testarCriptografiaSimetrica();
 //        testarCriptografiaAssimetrica();
 
-        String md5 = CriptografiaHashUtils.md5("admin");
-        System.out.println(md5);
-        boolean comparacaoMd5 = CriptografiaHashUtils.comparacaoMd5("admin1", md5);
-        System.out.println(comparacaoMd5);
+//        final String generateSaltedHash = CriptografiaHashUtils.md5Salt("123456", "123456");
+//        System.out.println(generateSaltedHash);
+
 
     }
 
@@ -43,12 +39,14 @@ public class Main {
         CriptografiaKeysUtils.gravarChaveSimplesEmArquivo("chaveSimples.key", chaveSimplesMemoria);
         byte[] chaveSimplesDoDisco = CriptografiaKeysUtils.lerChaveSimplesDoDisco("chaveSimples.key");
 
-        System.out.println("Chave Gerada (Binario) : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(chaveSimplesDoDisco));
-        System.out.println("Chave Gerada (Base64)  : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(chaveSimplesDoDisco));
+//        System.out.println("Chave Gerada (String) : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(chaveSimplesDoDisco));
+//        System.out.println("Chave Gerada (Base64)  : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(chaveSimplesDoDisco));
+//        System.out.println("Chave Gerada (Hexa)    : " + CriptografiaConversoresUtils.converterBinarioParaHexa(chaveSimplesDoDisco));
 
         byte[] criptografarTexto = CriptografiaSimetricaUtils.criptografarTexto(chaveSimplesDoDisco, textoClaro);
         System.out.println("Texto Cripto (Binario) : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(criptografarTexto));
         System.out.println("Texto Cripto (Base64)  : " + CriptografiaConversoresUtils.converterBinarioEmStringBase64(criptografarTexto));
+        System.out.println("Texto Cripto (Hexa)    : " + CriptografiaConversoresUtils.converterBinarioParaHexa(criptografarTexto));
 
         String descriptografarTexto = CriptografiaSimetricaUtils.descriptografarTexto(chaveSimplesDoDisco, criptografarTexto);
         System.out.println("Texto Descr            : " + descriptografarTexto);

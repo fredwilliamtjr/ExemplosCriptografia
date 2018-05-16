@@ -2,6 +2,8 @@ package cripto.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.security.MessageDigest;
+
 /**
  * Autor: Fred William Torno Junior
  * E-Mail: fredwilliam@gmail.com / fredwilliam@outlook.com
@@ -48,6 +50,45 @@ public class CriptografiaHashUtils {
     public static boolean comparacaoSha512(String textoNormal, String textoSha512){
         String sha512 = sha512(textoNormal);
         return textoSha512.equals(sha512);
+    }
+
+    public static String md5Salt(String texto, String saltPhrase) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            if (saltPhrase != null) {
+                md.update(saltPhrase.getBytes());
+                byte[] salt = md.digest();
+
+                md.reset();
+                md.update(texto.getBytes());
+                md.update(salt);
+            } else
+            {
+                md.update(texto.getBytes());
+            }
+            byte[] raw = md.digest();
+            return convertByteToHex(raw);
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
+    public static boolean comparacaoMd5Salt(String textoNormal, String textoMd5Salt, String saltPhrase){
+        final String md5Salt = md5Salt(textoNormal, saltPhrase);
+        return textoMd5Salt.equals(md5Salt);
+    }
+
+    private static String convertByteToHex(byte[] byteData) {
+
+        StringBuilder sb = new StringBuilder();
+        // System.out.println("byteData.length " + byteData.length);
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16)
+                    .substring(1));
+        }
+
+        return sb.toString();
     }
 
 }

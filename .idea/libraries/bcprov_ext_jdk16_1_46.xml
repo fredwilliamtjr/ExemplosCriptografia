@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/bcprov-ext-jdk16-1.46.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jBCrypt-0.4.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -30,8 +30,8 @@ import javax.crypto.KeyGenerator;
 public class CriptografiaKeysUtils {
 
     private static final int RSAKEYSIZE = 1024;
-    private static final String METODO_ENCRIPTACAO = "RSA";
-    private static final String METODO_ENCRIPTACAO2 = "AES";
+    private static final String METODO_ENCRIPTACAO_PAR = "RSA";
+    private static final String METODO_ENCRIPTACAO_SIMPLES = "AES";
 
     private static PrivateKey privateKey = null;
     private static PublicKey publicKey = null;
@@ -57,7 +57,7 @@ public class CriptografiaKeysUtils {
     public static byte[] gerarChaveSimples() {
         byte[] retorno = null;
         try {
-            KeyGenerator keyGen = KeyGenerator.getInstance(METODO_ENCRIPTACAO2);
+            KeyGenerator keyGen = KeyGenerator.getInstance(METODO_ENCRIPTACAO_SIMPLES);
             //keyGen.init(128);
             retorno = keyGen.generateKey().getEncoded();
         } catch (NoSuchAlgorithmException e) {
@@ -120,7 +120,7 @@ public class CriptografiaKeysUtils {
      */
     public static boolean gerarParChaves() throws Throwable {
         try {
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance(METODO_ENCRIPTACAO);
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance(METODO_ENCRIPTACAO_PAR);
             kpg.initialize(new RSAKeyGenParameterSpec(RSAKEYSIZE, RSAKeyGenParameterSpec.F4));
             keyPair = kpg.generateKeyPair();
             privateKey = keyPair.getPrivate();
