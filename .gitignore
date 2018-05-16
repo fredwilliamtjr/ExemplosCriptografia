@@ -8,3 +8,7 @@
 /nbproject
 /ExemplosCriptografia.iml
 /manifest.mf
+/build.xml
+/nosso.keystore
+/private.key
+/public.key

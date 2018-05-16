@@ -21,12 +21,7 @@ public class Main {
      */
     public static void main(String[] args) throws Throwable {
         testarCriptografiaSimetrica();
-//        testarCriptografiaAssimetrica();
-
-//        final String generateSaltedHash = CriptografiaHashUtils.md5Salt("123456", "123456");
-//        System.out.println(generateSaltedHash);
-
-
+        testarCriptografiaAssimetrica();
     }
 
     private static void testarCriptografiaSimetrica() throws Throwable {
@@ -62,8 +57,8 @@ public class Main {
         CriptografiaKeysUtils.gerarParChaves();
         
         // Tambem é possivel gravar cada chave em um arquivo distinto e recuperar as chaves dos mesmos, como demostrado nas 2 linhas abaixo
-        //CriptografiaKeysUtils.gravarParChavesEmArquivo("private.key", "public.key");
-        //CriptografiaKeysUtils.lerParChavesDoDisco("private.key", "public.key");
+        CriptografiaKeysUtils.gravarParChavesEmArquivo("private.key", "public.key");
+        CriptografiaKeysUtils.lerParChavesDoDisco("private.key", "public.key");
 
         PublicKey publicKey = CriptografiaKeysUtils.getPublicKey();
         System.out.println("publicKey Gerada      : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(publicKey.getEncoded()));
@@ -73,16 +68,16 @@ public class Main {
         System.out.println("-------------------------------------------------------------------------------------------------");
         
         // Tambem é possivel gravar em uma KeyStore com Senha e recuperar as chaves dela, como demostrado nas 7 linhas abaixo
-        //KeyStore keyStore = CriptografiaKeyStoreUtils.criarKeyStore();
-        //KeyPair keyPair = CriptografiaKeysUtils.getKeyPair();
-        //keyStore = CriptografiaKeyStoreUtils.armazenarKeyPairNaKeyStore(keyStore, keyPair, "private", "public", "123", "123");
-        //CriptografiaKeyStoreUtils.gravarKeyStoreEmDisco(keyStore, "123", "nosso.keystore");
-        //KeyStore keyStoreDoDisco = CriptografiaKeyStoreUtils.lerKeyStoreDoDisco("nosso.keystore", "123");
-        //publicKey = CriptografiaKeyStoreUtils.recuperarPublicKeyDakeyStore(keyStoreDoDisco, "public", "123");
-        //System.out.println("publicKey Recuparada  : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(publicKey.getEncoded()));
-        //privateKey = CriptografiaKeyStoreUtils.recuperarPrivateKeyDakeyStore(keyStoreDoDisco, "private", "123");
-        //System.out.println("privateKey Recuparada : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(privateKey.getEncoded()));
-        //System.out.println("-------------------------------------------------------------------------------------------------");
+        KeyStore keyStore = CriptografiaKeyStoreUtils.criarKeyStore();
+        KeyPair keyPair = CriptografiaKeysUtils.getKeyPair();
+        keyStore = CriptografiaKeyStoreUtils.armazenarKeyPairNaKeyStore(keyStore, keyPair, "private", "public", "123", "123");
+        CriptografiaKeyStoreUtils.gravarKeyStoreEmDisco(keyStore, "123", "nosso.keystore");
+        KeyStore keyStoreDoDisco = CriptografiaKeyStoreUtils.lerKeyStoreDoDisco("nosso.keystore", "123");
+        publicKey = CriptografiaKeyStoreUtils.recuperarPublicKeyDakeyStore(keyStoreDoDisco, "public", "123");
+        System.out.println("publicKey Recuparada  : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(publicKey.getEncoded()));
+        privateKey = CriptografiaKeyStoreUtils.recuperarPrivateKeyDakeyStore(keyStoreDoDisco, "private", "123");
+        System.out.println("privateKey Recuparada : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(privateKey.getEncoded()));
+        System.out.println("-------------------------------------------------------------------------------------------------");
 
         byte[] criptografarTexto = CriptografiaAssimetricaUtils.criptografarTexto(publicKey, textoClaro);
         System.out.println("Texto Cripto          : " + CriptografiaConversoresUtils.converterBinarioEmStringSimples(criptografarTexto));
